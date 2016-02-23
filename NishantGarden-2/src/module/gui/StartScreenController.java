@@ -23,6 +23,7 @@ public class StartScreenController implements Initializable {
 	
 	@FXML
 	private Label GardenStatus;
+	private Label Instructions;
 	
 	@FXML
 	private void clickedButtonStartGarden(ActionEvent event) {
