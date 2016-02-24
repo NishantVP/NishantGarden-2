@@ -23,6 +23,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import module.garden.SectionConfiguration;
 
@@ -35,6 +36,9 @@ public class SectionEditorController implements Initializable {
 	private List<SectionConfiguration> sectionConfigList;
 	private SectionConfiguration sectionConfig;
 	private int sectionNumber;
+	@FXML private ToggleGroup plantsToggleGroup;
+	@FXML private ToggleGroup sprinklersToggleGroup;
+	@FXML private ToggleGroup heatersToggleGroup;
 	
 	@FXML
 	private Button SaveButton;
