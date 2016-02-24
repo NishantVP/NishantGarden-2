@@ -27,6 +27,7 @@ public class GardenStart extends Application {
 		Parent root =  FXMLLoader.load(getClass().getResource("StartScreenView.fxml"));
 		
 		Scene scene = new Scene(root);
+		primaryStage.setTitle("Garden Configuration");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		
