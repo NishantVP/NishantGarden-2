@@ -49,7 +49,7 @@ public class GardenStart extends Application {
 		sectionConfigList.add(section6Config);
 		
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("StartScreenView.fxml"));
-		Parent root =  (Parent)fxmlLoader.load(); //FXMLLoader.load(getClass().getResource("StartScreenView.fxml"));
+		Parent root =  (Parent)fxmlLoader.load(); 
 		
 		StartScreenController controller = fxmlLoader.<StartScreenController>getController();
 		controller.setSectionConfigList(sectionConfigList);

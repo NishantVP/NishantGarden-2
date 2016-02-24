@@ -34,12 +34,34 @@ public class StartScreenController implements Initializable {
 	private SectionConfiguration section1Config,section2Config,section3Config;
 	private SectionConfiguration section4Config,section5Config,section6Config;
 	
-	@FXML
-	private Label GardenStatus;
-	@FXML
-	private Label Instructions;
-	@FXML
-	private Button StartGarden;
+	@FXML private Label GardenStatus;
+	@FXML private Label Instructions;
+	@FXML private Button StartGarden;
+	@FXML private Label sec_1_Plant;
+	@FXML private Label sec_1_Sprinklers;
+	@FXML private Label sec_1_Heaters;
+	@FXML private Label sec_1_Sensors;
+	@FXML private Label sec_2_Plant;
+	@FXML private Label sec_2_Sprinklers;
+	@FXML private Label sec_2_Heaters;
+	@FXML private Label sec_2_Sensors;
+	@FXML private Label sec_3_Plant;
+	@FXML private Label sec_3_Sprinklers;
+	@FXML private Label sec_3_Heaters;
+	@FXML private Label sec_3_Sensors;
+	@FXML private Label sec_4_Plant;
+	@FXML private Label sec_4_Sprinklers;
+	@FXML private Label sec_4_Heaters;
+	@FXML private Label sec_4_Sensors;
+	@FXML private Label sec_5_Plant;
+	@FXML private Label sec_5_Sprinklers;
+	@FXML private Label sec_5_Heaters;
+	@FXML private Label sec_5_Sensors;
+	@FXML private Label sec_6_Plant;
+	@FXML private Label sec_6_Sprinklers;
+	@FXML private Label sec_6_Heaters;
+	@FXML private Label sec_6_Sensors;
+	
 	
 	@FXML
 	private void ButtonStartGarden(ActionEvent event) {
@@ -53,16 +75,40 @@ public class StartScreenController implements Initializable {
 		this.GardenStatus.setText("Editing Section 1");
 		this.StartGarden.setDisable(true);
 		
-		Parent root;
-		root = FXMLLoader.load(getClass().getResource("SectionEditorView.fxml")); //FXMLLoader.load(getClass().getClassLoader().getResource("path/to/other/view.fxml"), resources);
-        Stage stage = (Stage) this.StartGarden.getScene().getWindow();//new Stage();
-        stage.setTitle("Section Properties Editor");
-        stage.setScene(new Scene(root));
-        stage.show();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SectionEditorView.fxml"));
+		Parent root =  (Parent)fxmlLoader.load(); 
+		
+		SectionEditorController controller = fxmlLoader.<SectionEditorController>getController();
+		controller.setSectionConfiguration(sectionConfigList,section1Config,1);
+		
+		Scene scene = new Scene(root);
+		Stage stage = (Stage) this.StartGarden.getScene().getWindow();//new Stage();
+		stage.setTitle("Section Properties Editor");
+		stage.setScene(scene);
+		stage.show();
+        
+        
 	}
 	
 	public void setSectionConfigList( List<SectionConfiguration> incomingList) {
+		
 		this.sectionConfigList = incomingList;
+		
+		getDefaultSectionConfigurations();
+		updateSectionConfigurationViews();
+		
+	}
+	
+	public void updateSectionConfiguration(List<SectionConfiguration> incomingList,SectionConfiguration incomingConfig, int secNumber) {
+		
+		this.sectionConfigList = incomingList;
+		this.section1Config = incomingConfig;
+		getDefaultSectionConfigurations();
+		updateSectionConfigurationViews();
+		
+	}
+	
+	private void getDefaultSectionConfigurations() {
 		
 		section1Config = new SectionConfiguration();
 		section2Config = new SectionConfiguration();
@@ -76,17 +122,47 @@ public class StartScreenController implements Initializable {
 		section3Config = sectionConfigList.get(2);
 		section4Config = sectionConfigList.get(3);
 		section5Config = sectionConfigList.get(4);
-		section6Config = sectionConfigList.get(5);
+		section6Config = sectionConfigList.get(5);	
+	}
+	
+	private void updateSectionConfigurationViews() {
 		
 		//System.out.println(section1Config.getPlantType());
+		sec_1_Plant.setText(section1Config.getPlantType());
+		sec_2_Plant.setText(section2Config.getPlantType());
+		sec_3_Plant.setText(section3Config.getPlantType());
+		sec_4_Plant.setText(section4Config.getPlantType());
+		sec_5_Plant.setText(section5Config.getPlantType());
+		sec_6_Plant.setText(section6Config.getPlantType());
 		
+		sec_1_Sprinklers.setText(Integer.toString(section1Config.getNumberOfSprinklers()));
+		sec_2_Sprinklers.setText(Integer.toString(section2Config.getNumberOfSprinklers()));
+		sec_3_Sprinklers.setText(Integer.toString(section3Config.getNumberOfSprinklers()));
+		sec_4_Sprinklers.setText(Integer.toString(section4Config.getNumberOfSprinklers()));
+		sec_5_Sprinklers.setText(Integer.toString(section5Config.getNumberOfSprinklers()));
+		sec_6_Sprinklers.setText(Integer.toString(section6Config.getNumberOfSprinklers()));
+		
+		sec_1_Heaters.setText(Integer.toString(section1Config.getNumberOfHeaters()));
+		sec_2_Heaters.setText(Integer.toString(section2Config.getNumberOfHeaters()));
+		sec_3_Heaters.setText(Integer.toString(section3Config.getNumberOfHeaters()));
+		sec_4_Heaters.setText(Integer.toString(section4Config.getNumberOfHeaters()));
+		sec_5_Heaters.setText(Integer.toString(section5Config.getNumberOfHeaters()));
+		sec_6_Heaters.setText(Integer.toString(section6Config.getNumberOfHeaters()));
+		
+		sec_1_Sensors.setText(section1Config.getSensorTypes());
+		sec_2_Sensors.setText(section2Config.getSensorTypes());
+		sec_3_Sensors.setText(section3Config.getSensorTypes());
+		sec_4_Sensors.setText(section4Config.getSensorTypes());
+		sec_5_Sensors.setText(section5Config.getSensorTypes());
+		sec_6_Sensors.setText(section6Config.getSensorTypes());
 	}
-
+	
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
 		// this.GardenStatus.setText("Welcome");
-		
+
 	}
 
 }

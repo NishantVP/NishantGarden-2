@@ -79,5 +79,20 @@ public class SectionConfiguration {
 		this.soilWaterSensors = value;
 	}
 	
+	//-- Rest of the Code --//
+	public String getSensorTypes() {
+		String sensorTypes = "";
+		
+		if(tempratureSensors) {
+			sensorTypes = sensorTypes + " T";
+		}
+		if(humiditySensors) {
+			sensorTypes = sensorTypes + " H";
+		}
+		if(soilWaterSensors) {
+			sensorTypes = sensorTypes + " S";
+		}
+		return sensorTypes;
+	}
 	
 }

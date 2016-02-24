@@ -20,7 +20,7 @@
             <Button fx:id="StartGarden" layoutX="360.0" layoutY="49.0" mnemonicParsing="false" onAction="#ButtonStartGarden" text="Start Garden" />
          </children>
       </Pane>
-      <Label layoutX="22.0" layoutY="5.0" prefHeight="85.0" prefWidth="755.0" text="Your Garden has 6 sections. You can plant different types of plants in each section. Use following Menu to decide configuration of each section of the garden. Click on the 'Edit' button if you wish to change the default configuration" textAlignment="JUSTIFY" wrapText="true" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
+      <Label fx:id="Instructions" layoutX="22.0" layoutY="5.0" prefHeight="85.0" prefWidth="755.0" text="Your Garden has 6 sections. You can plant different types of plants in each section. Use following Menu to decide configuration of each section of the garden. Click on the 'Edit' button if you wish to change the default configuration" textAlignment="JUSTIFY" wrapText="true" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
       <SplitPane dividerPositions="0.3300423131170663, 0.6727785613540197" layoutX="58.0" layoutY="128.0" prefHeight="160.0" prefWidth="711.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="158.0" prefWidth="119.0">
@@ -44,7 +44,7 @@
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Label fx:id="sec_1_Sensors" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
@@ -54,7 +54,7 @@
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Label fx:id="sec_1_Heaters" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
@@ -69,12 +69,12 @@
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Label fx:id="sec_1_Sprinklers" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Label" GridPane.columnIndex="1">
+                        <Label fx:id="sec_1_Plant" text="Label" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
@@ -104,7 +104,7 @@
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Label fx:id="sec_2_Sensors" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
@@ -114,7 +114,7 @@
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Label fx:id="sec_2_Heaters" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
@@ -129,12 +129,12 @@
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Label fx:id="sec_2_Sprinklers" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Label" GridPane.columnIndex="1">
+                        <Label fx:id="sec_2_Plant" text="Label" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
@@ -164,7 +164,7 @@
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Label fx:id="sec_3_Sensors" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
@@ -174,7 +174,7 @@
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Label fx:id="sec_3_Heaters" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
@@ -189,12 +189,12 @@
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Label fx:id="sec_3_Sprinklers" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Label" GridPane.columnIndex="1">
+                        <Label fx:id="sec_3_Plant" text="Label" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
@@ -228,7 +228,7 @@
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Label fx:id="sec_4_Sensors" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
@@ -238,7 +238,7 @@
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Label fx:id="sec_4_Heaters" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
@@ -253,12 +253,12 @@
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Label fx:id="sec_4_Sprinklers" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Label" GridPane.columnIndex="1">
+                        <Label fx:id="sec_4_Plant" text="Label" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
@@ -288,7 +288,7 @@
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Label fx:id="sec_5_Sensors" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
@@ -298,7 +298,7 @@
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Label fx:id="sec_5_Heaters" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
@@ -313,12 +313,12 @@
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Label fx:id="sec_5_Sprinklers" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Label" GridPane.columnIndex="1">
+                        <Label fx:id="sec_5_Plant" text="Label" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
@@ -348,7 +348,7 @@
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Label fx:id="sec_6_Sensors" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
@@ -358,7 +358,7 @@
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Label fx:id="sec_6_Heaters" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
@@ -373,12 +373,12 @@
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Label fx:id="sec_6_Sprinklers" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Label" GridPane.columnIndex="1">
+                        <Label fx:id="sec_6_Plant" text="Label" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
