@@ -71,9 +71,10 @@ public class StartScreenController implements Initializable {
 	
 	@FXML
 	private void ButtonEditSection1(ActionEvent event) throws IOException {
+		
 		System.out.println("Section 1 Edit Clicked");
-		this.GardenStatus.setText("Editing Section 1");
-		this.StartGarden.setDisable(true);
+		//this.GardenStatus.setText("Editing Section 1");
+		//this.StartGarden.setDisable(true);
 		
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SectionEditorView.fxml"));
 		Parent root =  (Parent)fxmlLoader.load(); 
@@ -85,9 +86,112 @@ public class StartScreenController implements Initializable {
 		Stage stage = (Stage) this.StartGarden.getScene().getWindow();//new Stage();
 		stage.setTitle("Section Properties Editor");
 		stage.setScene(scene);
-		stage.show();
-        
-        
+		stage.show();    
+	}
+	
+
+	@FXML
+	private void ButtonEditSection2(ActionEvent event) throws IOException {
+		
+		System.out.println("Section 2 Edit Clicked");
+		//this.GardenStatus.setText("Editing Section 2");
+		//this.StartGarden.setDisable(true);
+		
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SectionEditorView.fxml"));
+		Parent root =  (Parent)fxmlLoader.load(); 
+		
+		SectionEditorController controller = fxmlLoader.<SectionEditorController>getController();
+		controller.setSectionConfiguration(sectionConfigList,section2Config,1);
+		
+		Scene scene = new Scene(root);
+		Stage stage = (Stage) this.StartGarden.getScene().getWindow();//new Stage();
+		stage.setTitle("Section Properties Editor");
+		stage.setScene(scene);
+		stage.show();    
+	}
+	
+
+	@FXML
+	private void ButtonEditSection3(ActionEvent event) throws IOException {
+		
+		System.out.println("Section 3 Edit Clicked");
+		//this.GardenStatus.setText("Editing Section 3");
+		//this.StartGarden.setDisable(true);
+		
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SectionEditorView.fxml"));
+		Parent root =  (Parent)fxmlLoader.load(); 
+		
+		SectionEditorController controller = fxmlLoader.<SectionEditorController>getController();
+		controller.setSectionConfiguration(sectionConfigList,section3Config,2);
+		
+		Scene scene = new Scene(root);
+		Stage stage = (Stage) this.StartGarden.getScene().getWindow();//new Stage();
+		stage.setTitle("Section Properties Editor");
+		stage.setScene(scene);
+		stage.show();    
+	}
+	
+
+	@FXML
+	private void ButtonEditSection4(ActionEvent event) throws IOException {
+		
+		System.out.println("Section 4 Edit Clicked");
+		//this.GardenStatus.setText("Editing Section 4");
+		//this.StartGarden.setDisable(true);
+		
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SectionEditorView.fxml"));
+		Parent root =  (Parent)fxmlLoader.load(); 
+		
+		SectionEditorController controller = fxmlLoader.<SectionEditorController>getController();
+		controller.setSectionConfiguration(sectionConfigList,section4Config,3);
+		
+		Scene scene = new Scene(root);
+		Stage stage = (Stage) this.StartGarden.getScene().getWindow();//new Stage();
+		stage.setTitle("Section Properties Editor");
+		stage.setScene(scene);
+		stage.show();    
+	}
+	
+
+	@FXML
+	private void ButtonEditSection5(ActionEvent event) throws IOException {
+		
+		System.out.println("Section 5 Edit Clicked");
+		//this.GardenStatus.setText("Editing Section 5");
+		//this.StartGarden.setDisable(true);
+		
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SectionEditorView.fxml"));
+		Parent root =  (Parent)fxmlLoader.load(); 
+		
+		SectionEditorController controller = fxmlLoader.<SectionEditorController>getController();
+		controller.setSectionConfiguration(sectionConfigList,section5Config,4);
+		
+		Scene scene = new Scene(root);
+		Stage stage = (Stage) this.StartGarden.getScene().getWindow();//new Stage();
+		stage.setTitle("Section Properties Editor");
+		stage.setScene(scene);
+		stage.show();    
+	}
+	
+
+	@FXML
+	private void ButtonEditSection6(ActionEvent event) throws IOException {
+		
+		System.out.println("Section 6 Edit Clicked");
+		//this.GardenStatus.setText("Editing Section 6");
+		//this.StartGarden.setDisable(true);
+		
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SectionEditorView.fxml"));
+		Parent root =  (Parent)fxmlLoader.load(); 
+		
+		SectionEditorController controller = fxmlLoader.<SectionEditorController>getController();
+		controller.setSectionConfiguration(sectionConfigList,section6Config,5);
+		
+		Scene scene = new Scene(root);
+		Stage stage = (Stage) this.StartGarden.getScene().getWindow();//new Stage();
+		stage.setTitle("Section Properties Editor");
+		stage.setScene(scene);
+		stage.show();    
 	}
 	
 	public void setSectionConfigList( List<SectionConfiguration> incomingList) {
