@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.65" fx:controller="module.gui.GardenManagerController">
+   <children>
+      <Label fx:id="gardenStatus" layoutX="24.0" layoutY="22.0" text="Garden Status" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+   </children>
+</AnchorPane>

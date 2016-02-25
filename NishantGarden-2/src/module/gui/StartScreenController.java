@@ -64,15 +64,27 @@ public class StartScreenController implements Initializable {
 	
 	
 	@FXML
-	private void ButtonStartGarden(ActionEvent event) {
-		System.out.println("New Garden Created");
+	private void ButtonStartGarden(ActionEvent event) throws IOException {
+		System.out.println("StartScreenController: Start Garden Pressed");
 		this.GardenStatus.setText("Congratulations ! Your new garden has been created");
+		 
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GardenManagerView.fxml"));
+		Parent root =  (Parent)fxmlLoader.load(); 
+		
+		GardenManagerController controller = fxmlLoader.<GardenManagerController>getController();
+		controller.setInitialConfiguration(sectionConfigList);
+		
+		Scene scene = new Scene(root);
+		Stage stage = (Stage) this.StartGarden.getScene().getWindow();//new Stage();
+		stage.setTitle("Section Properties Editor");
+		stage.setScene(scene);
+		stage.show();    
 	}
 	
 	@FXML
 	private void ButtonEditSection1(ActionEvent event) throws IOException {
 		
-		System.out.println("Section 1 Edit Clicked");
+		System.out.println("StartScreenController: Section 1 Edit Clicked");
 		//this.GardenStatus.setText("Editing Section 1");
 		//this.StartGarden.setDisable(true);
 		
@@ -93,7 +105,7 @@ public class StartScreenController implements Initializable {
 	@FXML
 	private void ButtonEditSection2(ActionEvent event) throws IOException {
 		
-		System.out.println("Section 2 Edit Clicked");
+		System.out.println("StartScreenController: Section 2 Edit Clicked");
 		//this.GardenStatus.setText("Editing Section 2");
 		//this.StartGarden.setDisable(true);
 		
@@ -114,7 +126,7 @@ public class StartScreenController implements Initializable {
 	@FXML
 	private void ButtonEditSection3(ActionEvent event) throws IOException {
 		
-		System.out.println("Section 3 Edit Clicked");
+		System.out.println("StartScreenController: Section 3 Edit Clicked");
 		//this.GardenStatus.setText("Editing Section 3");
 		//this.StartGarden.setDisable(true);
 		
@@ -135,7 +147,7 @@ public class StartScreenController implements Initializable {
 	@FXML
 	private void ButtonEditSection4(ActionEvent event) throws IOException {
 		
-		System.out.println("Section 4 Edit Clicked");
+		System.out.println("StartScreenController: Section 4 Edit Clicked");
 		//this.GardenStatus.setText("Editing Section 4");
 		//this.StartGarden.setDisable(true);
 		
@@ -156,7 +168,7 @@ public class StartScreenController implements Initializable {
 	@FXML
 	private void ButtonEditSection5(ActionEvent event) throws IOException {
 		
-		System.out.println("Section 5 Edit Clicked");
+		System.out.println("StartScreenController: Section 5 Edit Clicked");
 		//this.GardenStatus.setText("Editing Section 5");
 		//this.StartGarden.setDisable(true);
 		
@@ -177,7 +189,7 @@ public class StartScreenController implements Initializable {
 	@FXML
 	private void ButtonEditSection6(ActionEvent event) throws IOException {
 		
-		System.out.println("Section 6 Edit Clicked");
+		System.out.println("StartScreenController: Section 6 Edit Clicked");
 		//this.GardenStatus.setText("Editing Section 6");
 		//this.StartGarden.setDisable(true);
 		
@@ -231,7 +243,7 @@ public class StartScreenController implements Initializable {
 	
 	private void updateSectionConfigurationViews() {
 		
-		//System.out.println(section1Config.getPlantType());
+		//System.out.println("StartScreenController: " +section1Config.getPlantType());
 		sec_1_Plant.setText(section1Config.getPlantType());
 		sec_2_Plant.setText(section2Config.getPlantType());
 		sec_3_Plant.setText(section3Config.getPlantType());

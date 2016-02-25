@@ -13,6 +13,10 @@
  */
 package module.garden;
 
+import java.util.List;
+
+import module.gui.GardenManagerController;
+
 /**
  * @author nishant
  *
@@ -21,15 +25,16 @@ public class Garden {
 	
 	//--Variables--//
 	private GardenSection section1,section2,section3,section4,section5,section6; 
+	private List<SectionConfiguration> sectionConfigList;
+	private GardenManagerController GardenManagerScreen;
+	
 	//Future tip: change this to list to allow dynamic addition of sections
 	
-	public Garden() {
-		this.section1 = new GardenSection();
-		this.section2 = new GardenSection();
-		this.section3 = new GardenSection();
-		this.section4 = new GardenSection();
-		this.section5 = new GardenSection();
-		this.section6 = new GardenSection();
+	public Garden(List<SectionConfiguration> incomingSectionConfigList,GardenManagerController screen) {
+		this.sectionConfigList = incomingSectionConfigList;
+		this.GardenManagerScreen = screen;
+		System.out.println("Garden: New Garden Created");
+		GardenManagerScreen.updateLabel("Garden Object Created");
 	}
 	
 
