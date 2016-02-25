@@ -15,7 +15,7 @@ package module.garden;
  * @author nishant
  *
  */
-public class SectionConfiguration {
+public class SectionConfiguration implements InterfaceSectionCharacteristics {
 	
 	//--Variables--//
 	private String plantType; 
@@ -37,49 +37,62 @@ public class SectionConfiguration {
 	
 	
 	//--Getters and Setters--//
+	@Override
 	public String getPlantType() {
 		return this.plantType;
 	}
+	@Override
 	public void setPlantType(String value) {
 		this.plantType = value;
 	}
 	
+	@Override
 	public int getNumberOfSprinklers() {
 		return this.numberOfSprinklers;
 	}
+	@Override
 	public void setNumberOfSprinklers(int value) {
 		this.numberOfSprinklers = value;
 	}
 	
+	@Override
 	public int getNumberOfHeaters() {
 		return this.numberOfHeaters;
 	}
+	@Override
 	public void setNumberOfHeaters(int value) {
 		this.numberOfHeaters = value;
 	}
 	
+	@Override
 	public boolean getTempratureSensors() {
 		return this.tempratureSensors;
 	}
+	@Override
 	public void setTempratureSensors(boolean value) {
 		this.tempratureSensors = value;
 	}
 	
+	@Override
 	public boolean getHumiditySensors() {
 		return this.humiditySensors;
 	}
+	@Override
 	public void setHumiditySensors(boolean value) {
 		this.humiditySensors = value;
 	}
 	
+	@Override
 	public boolean getSoilWaterSensors() {
 		return this.soilWaterSensors;
 	}
+	@Override
 	public void setSoilWaterSensors(boolean value) {
 		this.soilWaterSensors = value;
 	}
 	
 	//-- Rest of the Code --//
+	@Override
 	public String getSensorTypes() {
 		String sensorTypes = "";
 		
