@@ -204,7 +204,7 @@ public class SectionEditorController implements Initializable {
 		sectionConfig = new SectionConfiguration();
 		this.sectionConfig = incomingConfig;
 		this.sectionNumber = secNumber;
-		
+		setViewOfCurrentSection();
 	}
 	
 	private void setViewOfCurrentSection()
@@ -215,6 +215,66 @@ public class SectionEditorController implements Initializable {
 		isTempSensors = sectionConfig.getTempratureSensors();
 		isHumSensors = sectionConfig.getHumiditySensors();
 		isSoilSensors = sectionConfig.getSoilWaterSensors();
+		
+		switch(plantType) {
+			case "Wheat":
+				Wheat.setSelected(true);
+				break;
+			case "Lemons":
+				Lemons.setSelected(true);
+				break;
+			case "Vegitables":
+				Vegitables.setSelected(true);
+				break;
+			case "Rice":
+				Rice.setSelected(true);
+				break;
+			case "Corn":
+				Corn.setSelected(true);
+				break;
+			case "Potatoes":
+				Potatoes.setSelected(true);
+				break;
+		}
+		
+		if(numberOfSprinklers == 1) {
+			sprink1.setSelected(true);
+		}
+		else if(numberOfSprinklers == 5) {
+			sprink5.setSelected(true);
+		}
+		else {
+			sprink10.setSelected(true);
+		}
+		
+		if(numberOfHeaters == 1) {
+			heater1.setSelected(true);
+		}
+		else if(numberOfHeaters == 5) {
+			heater5.setSelected(true);
+		}
+		else {
+			heater10.setSelected(true);
+		}
+		
+		if(isTempSensors) {
+			tempSensor.setSelected(true);
+		}
+		else {
+			tempSensor.setSelected(false);
+		}
+		if(isHumSensors) {
+			humiditySensor.setSelected(true);
+		}
+		else {
+			humiditySensor.setSelected(false);
+		}
+		if(isSoilSensors) {
+			soilSensor.setSelected(true);
+		}
+		else {
+			soilSensor.setSelected(false);
+		}
 	}
 	
 	@Override
