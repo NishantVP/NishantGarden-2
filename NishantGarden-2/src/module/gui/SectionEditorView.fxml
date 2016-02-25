@@ -13,16 +13,16 @@
       <Pane layoutX="6.0" layoutY="7.0" prefHeight="242.0" prefWidth="242.0" style="-fx-background-color: #ccffcc;" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
             <Label layoutX="10.0" layoutY="10.0" text="Plant" />
-            <RadioButton layoutX="20.0" layoutY="50.0" mnemonicParsing="false" selected="true" text="Wheat">
+            <RadioButton fx:id="Wheat" layoutX="20.0" layoutY="50.0" mnemonicParsing="false" onAction="#plantsRadioButtonAction" selected="true" text="Wheat">
                <toggleGroup>
                   <ToggleGroup fx:id="plantsToggleGroup" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton layoutX="20.0" layoutY="80.0" mnemonicParsing="false" text="Lemons" toggleGroup="$plantsToggleGroup" />
-            <RadioButton layoutX="20.0" layoutY="110.0" mnemonicParsing="false" text="Vegitables" toggleGroup="$plantsToggleGroup" />
-            <RadioButton layoutX="140.0" layoutY="50.0" mnemonicParsing="false" text="Corn" toggleGroup="$plantsToggleGroup" />
-            <RadioButton layoutX="140.0" layoutY="80.0" mnemonicParsing="false" text="Rice" toggleGroup="$plantsToggleGroup" />
-            <RadioButton layoutX="140.0" layoutY="110.0" mnemonicParsing="false" text="Potatoes" toggleGroup="$plantsToggleGroup" />
+            <RadioButton fx:id="Lemons" layoutX="20.0" layoutY="80.0" mnemonicParsing="false" onAction="#plantsRadioButtonAction" text="Lemons" toggleGroup="$plantsToggleGroup" />
+            <RadioButton fx:id="Vegitables" layoutX="20.0" layoutY="110.0" mnemonicParsing="false" onAction="#plantsRadioButtonAction" text="Vegitables" toggleGroup="$plantsToggleGroup" />
+            <RadioButton fx:id="Corn" layoutX="140.0" layoutY="50.0" mnemonicParsing="false" onAction="#plantsRadioButtonAction" text="Corn" toggleGroup="$plantsToggleGroup" />
+            <RadioButton fx:id="Rice" layoutX="140.0" layoutY="80.0" mnemonicParsing="false" onAction="#plantsRadioButtonAction" text="Rice" toggleGroup="$plantsToggleGroup" />
+            <RadioButton fx:id="Potatoes" layoutX="140.0" layoutY="110.0" mnemonicParsing="false" onAction="#plantsRadioButtonAction" text="Potatoes" toggleGroup="$plantsToggleGroup" />
             <Label layoutX="10.0" layoutY="175.0" prefHeight="61.0" prefWidth="226.0" text="Select one of the plants from above for this section" wrapText="true" />
          </children>
       </Pane>
@@ -30,41 +30,33 @@
          <children>
             <Label layoutX="10.0" layoutY="10.0" text="Watering System" />
             <Label layoutX="20.0" layoutY="50.0" text="Number of Sprinklers" />
-            <RadioButton layoutX="40.0" layoutY="75.0" mnemonicParsing="false" text="1">
+            <RadioButton fx:id="sprink1" layoutX="40.0" layoutY="75.0" mnemonicParsing="false" onAction="#sprinklersRadioButtonAction" text="1">
                <toggleGroup>
                   <ToggleGroup fx:id="sprinklersToggleGroup" />
                </toggleGroup></RadioButton>
-            <RadioButton layoutX="90.0" layoutY="75.0" mnemonicParsing="false" text="5" toggleGroup="$sprinklersToggleGroup" />
-            <RadioButton layoutX="140.0" layoutY="75.0" mnemonicParsing="false" selected="true" text="10" toggleGroup="$sprinklersToggleGroup" />
+            <RadioButton fx:id="sprink5" layoutX="90.0" layoutY="75.0" mnemonicParsing="false" onAction="#sprinklersRadioButtonAction" text="5" toggleGroup="$sprinklersToggleGroup" />
+            <RadioButton fx:id="sprink10" layoutX="140.0" layoutY="75.0" mnemonicParsing="false" onAction="#sprinklersRadioButtonAction" selected="true" text="10" toggleGroup="$sprinklersToggleGroup" />
          </children>
       </Pane>
       <Pane layoutX="8.0" layoutY="249.0" prefHeight="242.0" prefWidth="242.0" style="-fx-background-color: #ffd6cc;" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="5.0">
          <children>
             <Label layoutX="10.0" layoutY="10.0" text="Heating System" />
             <Label layoutX="20.0" layoutY="50.0" text="Number of Heaters" />
-            <RadioButton layoutX="40.0" layoutY="75.0" mnemonicParsing="false" text="1">
+            <RadioButton fx:id="heater1" layoutX="40.0" layoutY="75.0" mnemonicParsing="false" onAction="#heatersRadioButtonAction" text="1">
                <toggleGroup>
-                  <ToggleGroup fx:id="sprinklersToggleGroup1" />
+                  <ToggleGroup fx:id="heatersToggleGroup" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton layoutX="90.0" layoutY="75.0" mnemonicParsing="false" text="5">
-               <toggleGroup>
-                  <ToggleGroup fx:id="sprinklersToggleGroup1" />
-               </toggleGroup>
-            </RadioButton>
-            <RadioButton layoutX="140.0" layoutY="75.0" mnemonicParsing="false" selected="true" text="10">
-               <toggleGroup>
-                  <ToggleGroup fx:id="sprinklersToggleGroup1" />
-               </toggleGroup>
-            </RadioButton>
+            <RadioButton fx:id="heater5" layoutX="90.0" layoutY="75.0" mnemonicParsing="false" onAction="#heatersRadioButtonAction" text="5" toggleGroup="$heatersToggleGroup" />
+            <RadioButton fx:id="heater10" layoutX="140.0" layoutY="75.0" mnemonicParsing="false" onAction="#heatersRadioButtonAction" selected="true" text="10" toggleGroup="$heatersToggleGroup" />
          </children>
       </Pane>
       <Pane layoutX="249.0" layoutY="249.0" prefHeight="242.0" prefWidth="242.0" style="-fx-background-color: #d6d6c2;" AnchorPane.bottomAnchor="55.0" AnchorPane.rightAnchor="5.0">
          <children>
             <Label layoutX="10.0" layoutY="10.0" text="Sensors" />
-            <CheckBox layoutX="20.0" layoutY="50.0" mnemonicParsing="false" selected="true" text="Temperature Sensors" />
-            <CheckBox layoutX="20.0" layoutY="90.0" mnemonicParsing="false" selected="true" text="Humidity Sensors" />
-            <CheckBox layoutX="20.0" layoutY="130.0" mnemonicParsing="false" selected="true" text="Soil Moisture Sensor" />
+            <CheckBox fx:id="tempSensor" layoutX="20.0" layoutY="50.0" mnemonicParsing="false" onAction="#sensorsCheckBoxAction" selected="true" text="Temperature Sensors" />
+            <CheckBox fx:id="humiditySensor" layoutX="20.0" layoutY="90.0" mnemonicParsing="false" onAction="#sensorsCheckBoxAction" selected="true" text="Humidity Sensors" />
+            <CheckBox fx:id="soilSensor" layoutX="20.0" layoutY="130.0" mnemonicParsing="false" onAction="#sensorsCheckBoxAction" selected="true" text="Soil Moisture Sensor" />
          </children>
       </Pane>
       <Button fx:id="SaveButton" layoutX="424.0" layoutY="510.0" mnemonicParsing="false" onAction="#ButtonSave" text="Save" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />

@@ -79,7 +79,7 @@ public class StartScreenController implements Initializable {
 		Parent root =  (Parent)fxmlLoader.load(); 
 		
 		SectionEditorController controller = fxmlLoader.<SectionEditorController>getController();
-		controller.setSectionConfiguration(sectionConfigList,section1Config,1);
+		controller.setSectionConfiguration(sectionConfigList,section1Config,0);
 		
 		Scene scene = new Scene(root);
 		Stage stage = (Stage) this.StartGarden.getScene().getWindow();//new Stage();
@@ -102,7 +102,7 @@ public class StartScreenController implements Initializable {
 	public void updateSectionConfiguration(List<SectionConfiguration> incomingList,SectionConfiguration incomingConfig, int secNumber) {
 		
 		this.sectionConfigList = incomingList;
-		this.section1Config = incomingConfig;
+		//this.section1Config = incomingConfig;
 		getDefaultSectionConfigurations();
 		updateSectionConfigurationViews();
 		
