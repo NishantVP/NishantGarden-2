@@ -9,33 +9,34 @@
  * --About this <file>--
  * 
  */
-package module.heatingsystem;
+package module.wateringsystem;
 
-import module.sensors.TemperatureSensor;
+import module.sensors.SoilSensor;
 
 /**
  * @author nishant
  *
  */
-public class Heater {
+public class Sprinkler {
 	
-	private TemperatureSensor tempratureSensor; 
+	private SoilSensor soilSensor; 
 	private boolean onOffStatus;
 	
-	public Heater (TemperatureSensor sensor) {
-		this.tempratureSensor = sensor;
+	public Sprinkler (SoilSensor sensor) {
+		this.soilSensor = sensor;
 		this.onOffStatus = false;
 	}
 	
-	public void turnOnHeater() {
+	public void turnOnSprinkler() {
 		onOffStatus = true;
 	}
 
-	public void turnOffHeater() {
+	public void turnOffSprinkler() {
 		onOffStatus = false;
 	}
 	
-	public boolean getHeaterStatus () {
+	public boolean getSprinklerStatus () {
 		return onOffStatus;
 	}
+
 }
