@@ -17,6 +17,7 @@ import java.util.List;
 
 import module.gui.GardenManagerController;
 
+
 /**
  * @author nishant
  *
@@ -35,6 +36,20 @@ public class Garden {
 		this.GardenManagerScreen = screen;
 		System.out.println("Garden: New Garden Created");
 		GardenManagerScreen.updateLabel("Garden Object Created");
+		
+		//-- Create Garden Section threads -- //
+		section1 = new GardenSection(sectionConfigList.get(0),1,GardenManagerScreen);
+	    new Thread(section1).start();
+		section2 = new GardenSection(sectionConfigList.get(1),2,GardenManagerScreen);
+	    new Thread(section2).start();
+		section3 = new GardenSection(sectionConfigList.get(2),3,GardenManagerScreen);
+	    new Thread(section3).start();
+		section4 = new GardenSection(sectionConfigList.get(3),4,GardenManagerScreen);
+	    new Thread(section4).start();
+		section5 = new GardenSection(sectionConfigList.get(4),5,GardenManagerScreen);
+	    new Thread(section5).start();
+		section6 = new GardenSection(sectionConfigList.get(5),6,GardenManagerScreen);
+	    new Thread(section6).start();
 	}
 	
 

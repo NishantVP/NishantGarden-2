@@ -9,17 +9,12 @@
  * --About this <file>--
  * 
  */
-package module.plants;
+package module.heatingsystem;
 
 /**
  * @author nishant
  *
  */
-public class WheatPlant extends Plants {
-	
-	//--Constructors--//
-	public WheatPlant() {
-		super();
-	}
+public class Heater {
 
 }
