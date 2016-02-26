@@ -79,19 +79,7 @@ public class GardenSection implements Runnable{
 			plants = new WheatPlant();
 		}
 		
-			//GlobalTime.reportTime(this);
-			
-			/*System.out.println("GardenSection " +this.SectionID +": " +"inside while true");
-			synchronized(GlobalTime){
-	            try{
-	                //System.out.println("Waiting for time...");
-	            	System.out.println("GardenSection " +this.SectionID +": " +"inside try");
-	                GlobalTime.wait();
-	            }catch(InterruptedException e){
-	            	System.out.println("GardenSection " +this.SectionID +": " +"inside catch");
-	                e.printStackTrace();
-	            }
-			}*/
+	
 		while(true) {
 			System.out.println("GardenSection " +this.SectionID +": time- " +GlobalTime.getCurrentTime());
 			try {

@@ -34,36 +34,12 @@ public class GardenTimer implements Runnable {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e.printStackTrace(); 
 			}
 	        timeInSeconds++;
 		}
 	}
 	
-	/*
-	public synchronized void reportTime(GardenSection section)
-	{ 
-		try{
-            //System.out.println("Waiting for time...");
-        	System.out.println("GardenTimer: " +"inside try");
-        	section.wait();
-        }catch(InterruptedException e){
-        	System.out.println("GardenTimer: " +"inside catch");
-            e.printStackTrace();
-        }
-	    /*while(true)
-	    { 
-	    	try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	    	timeInSeconds++;
-	        notifyAll();;
-	    }     
-	    //take the action here;
-	} */
 	
 	public synchronized long getCurrentTime() {
 		return timeInSeconds;
