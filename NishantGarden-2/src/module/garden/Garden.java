@@ -16,6 +16,7 @@ package module.garden;
 import java.util.List;
 
 import module.gui.GardenManagerController;
+import module.timesimulation.GardenTimer;
 
 
 /**
@@ -28,6 +29,7 @@ public class Garden {
 	private GardenSection section1,section2,section3,section4,section5,section6; 
 	private List<SectionConfiguration> sectionConfigList;
 	private GardenManagerController GardenManagerScreen;
+	private GardenTimer GlobalTime;
 	
 	//Future tip: change this to list to allow dynamic addition of sections
 	
@@ -37,18 +39,20 @@ public class Garden {
 		System.out.println("Garden: New Garden Created");
 		GardenManagerScreen.updateLabel("Garden Object Created");
 		
+		GlobalTime = new GardenTimer();
+		new Thread(GlobalTime).start();
 		//-- Create Garden Section threads -- //
-		section1 = new GardenSection(sectionConfigList.get(0),1,GardenManagerScreen);
+		section1 = new GardenSection(sectionConfigList.get(0),1,GardenManagerScreen,GlobalTime);
 	    new Thread(section1).start();
-		section2 = new GardenSection(sectionConfigList.get(1),2,GardenManagerScreen);
+		section2 = new GardenSection(sectionConfigList.get(1),2,GardenManagerScreen,GlobalTime);
 	    new Thread(section2).start();
-		section3 = new GardenSection(sectionConfigList.get(2),3,GardenManagerScreen);
+		section3 = new GardenSection(sectionConfigList.get(2),3,GardenManagerScreen,GlobalTime);
 	    new Thread(section3).start();
-		section4 = new GardenSection(sectionConfigList.get(3),4,GardenManagerScreen);
+		section4 = new GardenSection(sectionConfigList.get(3),4,GardenManagerScreen,GlobalTime);
 	    new Thread(section4).start();
-		section5 = new GardenSection(sectionConfigList.get(4),5,GardenManagerScreen);
+		section5 = new GardenSection(sectionConfigList.get(4),5,GardenManagerScreen,GlobalTime);
 	    new Thread(section5).start();
-		section6 = new GardenSection(sectionConfigList.get(5),6,GardenManagerScreen);
+		section6 = new GardenSection(sectionConfigList.get(5),6,GardenManagerScreen,GlobalTime);
 	    new Thread(section6).start();
 	}
 	

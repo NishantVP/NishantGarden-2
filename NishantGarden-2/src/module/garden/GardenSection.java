@@ -19,6 +19,7 @@ import module.plants.PotatoesPlant;
 import module.plants.RicePlant;
 import module.plants.VegitablesPlant;
 import module.plants.WheatPlant;
+import module.timesimulation.GardenTimer;
 
 /**
  * @author nishant
@@ -30,12 +31,15 @@ public class GardenSection implements Runnable{
 	private int SectionID;
 	private Plants plants;
 	private GardenManagerController GardenManagerScreen;
+	private GardenTimer GlobalTime;
 	
 	
-	public GardenSection(SectionConfiguration incomingConfig, int id, GardenManagerController screen) {
+	public GardenSection(SectionConfiguration incomingConfig, int id, 
+							GardenManagerController screen, GardenTimer time) {
 		this.SectionConfig = incomingConfig;
 		this.SectionID = id;
 		this.GardenManagerScreen = screen;
+		this.GlobalTime = time;
 		//System.out.println("GardenSection: " +"In contructor of " +SectionID );
 	}
 
@@ -74,8 +78,29 @@ public class GardenSection implements Runnable{
 		else {
 			plants = new WheatPlant();
 		}
-
 		
+			//GlobalTime.reportTime(this);
+			
+			/*System.out.println("GardenSection " +this.SectionID +": " +"inside while true");
+			synchronized(GlobalTime){
+	            try{
+	                //System.out.println("Waiting for time...");
+	            	System.out.println("GardenSection " +this.SectionID +": " +"inside try");
+	                GlobalTime.wait();
+	            }catch(InterruptedException e){
+	            	System.out.println("GardenSection " +this.SectionID +": " +"inside catch");
+	                e.printStackTrace();
+	            }
+			}*/
+		while(true) {
+			System.out.println("GardenSection " +this.SectionID +": time- " +GlobalTime.getCurrentTime());
+			try {
+				Thread.sleep(900);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 	}
 
