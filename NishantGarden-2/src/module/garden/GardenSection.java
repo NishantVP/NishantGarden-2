@@ -112,6 +112,9 @@ public class GardenSection implements Runnable{
 		sprinklers = new Sprinkler();
 		heaters = new Heater();
 		
+		//System.out.println("Sprinkler Status " +sprinklers.getSprinklerStatus());
+		//System.out.println("Heater Status " +heaters.getHeaterStatus());
+		
 		pestEvent = new PestAttack();
 		powerFailureEvent = new PowerFailure();
 		rainEvent = new Rain();
@@ -134,6 +137,7 @@ public class GardenSection implements Runnable{
 		System.out.println("GardenSection: " +"Thread for Section " +this.SectionID +" created");
 		setPlantType();
 		currentTime = GlobalTime.getCurrentTime();
+		calculateDaysHoursMinutes();
 		
 		LogMessage ="Event" 			+","	+"TimeSinceStart"	+","
 					+"Days" 			+"," 	+"Hours" 			+"," 	+"Minutes" 			+","
@@ -143,8 +147,11 @@ public class GardenSection implements Runnable{
 					+"WaterLevel"		+","	+"WaterNeed"		+","	+"SprinklerStatus"	+","
 					+"CurrentTempera"	+","	+"HeaterStatus"		+","
 					+"FertilizerLevel"	+","
-					+"LowDayLight"		+","	+"PestAttack"		+","	+"Power Failure"	+","
-					+"Rain"				+","	+"WaterCutOff"
+					+"LowDayLight"		+","	+"LowLightSeverity" +","	
+					+"PestAttack"		+","	+"PestSeverity"		+","	
+					+"Power Failure"	+","	+"PowerOffTimeRemaining"	+","
+					+"Rain"				+","	+"RainTimeRemaining"		+","
+					+"WaterCutOff"		+","	+"WaterCutOffTimeRemaining"
 					;
 		
 		try {
@@ -159,6 +166,8 @@ public class GardenSection implements Runnable{
 			putTimestamp();
 			//System.out.println("GardenSection " +this.SectionID +": Sprinkler turned ON");
 		}*/
+		
+		WriteLogs("Section Created");
 		
 		while(true) {
 			currentTime = GlobalTime.getCurrentTime();
@@ -186,6 +195,8 @@ public class GardenSection implements Runnable{
 				if(minutes % 15 == 0) {
 					//Do this every 15 min
 					onOffSprinkler();
+					String uiTimeString = "Days:" +days +" Hours:" +hours +" Minutes:" +minutes ; 
+					GardenManagerScreen.updateTime(uiTimeString, this.SectionID);
 				}
 				
 				if(lastHour != hours) {
@@ -206,16 +217,19 @@ public class GardenSection implements Runnable{
 				if(lastHalfDay != halfDays) {
 					//Do twice a day tasks here
 					//System.out.println("GardenSection " +this.SectionID +": Half Days- " +halfDays +" days " +days);
+					UpdateGUI();
 					
 					lastHalfDay = halfDays;
 				}
 				
 				if(lastDay != days) {
 					//Do Daily tasks here
-					
+					WriteLogs("New Day");
 					//System.out.println("GardenSection " +this.SectionID +": Days- "  +days);
 					System.out.println("GardenSection " +this.SectionID +": Days-"  +days +" growth-" +plants.getGrowth());
 					soilSensor.decreaseFertilizerLevelBy(plants.getCurrentFertilizerNeed()*24);
+					
+					putFertilizers();
 					
 					lastDay = days;
 				}
@@ -224,7 +238,7 @@ public class GardenSection implements Runnable{
 					//Do tasks every three days here
 					
 					//System.out.println("GardenSection " +this.SectionID +": Days- "  +days);
-					putFertilizers();
+					
 					RandomEventMayHappen();
 				}
 			}
@@ -234,37 +248,71 @@ public class GardenSection implements Runnable{
 		
 	}
 	
+	private void UpdateGUI() {
+		DecimalFormat numberFormat = new DecimalFormat("#.00");
+		String AvgPlantGrowth = numberFormat.format(plants.getGrowth());
+		String RandomEvent = "";
+		
+		if(lowLightEvent.getEventStatus()) {
+			RandomEvent += " Low Sunlight";
+		}
+		if(pestEvent.getEventStatus()) {
+			RandomEvent += " Pest Attacks";
+		}
+		if(powerFailureEvent.getEventStatus()) {
+			RandomEvent += " Power Failure";
+		}
+		if(rainEvent.getEventStatus()) {
+			RandomEvent += " Rain";
+		}
+		if(waterCutOffEvent.getEventStatus()) {
+			RandomEvent = " Water Cut Off";
+		}
+		
+		
+		String uiSectionStatusString = "Plant:" +PlantTypeString +", Average Growth: " +AvgPlantGrowth
+									+", Random Event:" +RandomEvent ;
+		GardenManagerScreen.updateLabel(uiSectionStatusString, this.SectionID);
+	}
+	
 	private void RandomEventMayHappen () {
 		Random rand = new Random();
 		int randomNum = rand.nextInt(13);
 		
-		putTimestamp();
+		//putTimestamp();
 		
 		if(randomNum %2 == 0) {
 			System.out.println("GardenSection " +this.SectionID +": No random event");
+			WriteLogs("No Random Event Happened");
 		}
 		else if (randomNum == 3) {
 			System.out.println("GardenSection " +this.SectionID +": Low Day Light");
 			lowLightEvent.happens();
+			WriteLogs("Low Day Light Event");
 		}
 		else if (randomNum == 5) {
 			System.out.println("GardenSection " +this.SectionID +": Pest Attack");
 			pestEvent.happens();
+			WriteLogs("Pest Attacks");
 		}
 		else if (randomNum == 7) {
 			System.out.println("GardenSection " +this.SectionID +": Power Failure");
 			powerFailureEvent.happens();
+			WriteLogs("Power Failure Occurs");
 		}
 		else if (randomNum == 9) {
 			System.out.println("GardenSection " +this.SectionID +": Rain");
 			rainEvent.happens();
+			WriteLogs("Rain Starts");
 		}
 		else if (randomNum == 11) {
 			System.out.println("GardenSection " +this.SectionID +": Water Cut Off");
 			waterCutOffEvent.happens();
+			WriteLogs("Water CutOff Occurs");
 		}
 		else {
 			System.out.println("GardenSection " +this.SectionID +": No random event");
+			WriteLogs("No Random Event");
 		}
 	}
 	
@@ -273,23 +321,28 @@ public class GardenSection implements Runnable{
 		if(lowLightEvent.getEventStatus()) {
 			growthDivisionFactor += (lowLightEvent.getSeverity()/10);
 			lowLightEvent.decreaseSeverity();
+			WriteLogs("Plant Growth Slows due to Low Sunlight");
 		}
 		if(pestEvent.getEventStatus()) {
 			growthDivisionFactor += (pestEvent.getSeverity()/10);
-			lowLightEvent.decreaseSeverity();
+			pestEvent.decreaseSeverity();
+			WriteLogs("Plant Growth Slows due to Pest Attack");
 		}
 		if(powerFailureEvent.getEventStatus()) {
 			if(sprinklers.getSprinklerStatus()) {
 				sprinklers.turnOffSprinkler();
+				WriteLogs("Sprinklers off due to Power Failure");
 			}
 			if(heaters.getHeaterStatus()) {
 				heaters.turnOffHeater();
+				WriteLogs("Heaters off due to Power Failure");
 			}
 			powerFailureEvent.decreaseTimeReaming();
 		}
 		if(rainEvent.getEventStatus()) {
 			if(sprinklers.getSprinklerStatus()) {
 				sprinklers.turnOffSprinkler();
+				WriteLogs("Sprinklers off because of Rain");
 			}
 			soilSensor.increaseWaterLevelBy(50);
 			rainEvent.decreaseTimeReaming();
@@ -297,6 +350,7 @@ public class GardenSection implements Runnable{
 		if(waterCutOffEvent.getEventStatus()) {
 			if(sprinklers.getSprinklerStatus()) {
 				sprinklers.turnOffSprinkler();
+				WriteLogs("Sprinklers off due to Water CutOff");
 			}
 			waterCutOffEvent.decreaseTimeReaming();
 		}
@@ -309,21 +363,25 @@ public class GardenSection implements Runnable{
 			//System.out.println("GardenSection " +this.SectionID +": Water Level=" +waterLevel +" Water Need=" +waterNeed);
 			//System.out.println("GardenSection " +this.SectionID +": Growth stopped due to no water");
 			growthDivisionFactor += 100;
+			WriteLogs("Plant Growth Stopped due to No Water");
 		}
 		else if(waterLevel < 0.5*waterNeed) {
 			//System.out.println("GardenSection " +this.SectionID +": Water Level=" +waterLevel +" Water Need=" +waterNeed);
 			//System.out.println("GardenSection " +this.SectionID +": Growth slowed due to low water");
 			growthDivisionFactor += 10;
+			WriteLogs("Plant Growth slows due to Low Water");
 		}
 		else if(waterLevel > 25*waterNeed) {
 			growthDivisionFactor += 5;
 			//System.out.println("GardenSection " +this.SectionID +": Water Level=" +waterLevel +" Water Need=" +waterNeed);
-			//System.out.println("GardenSection " +this.SectionID +": Growth slowed due to too much water");			
+			//System.out.println("GardenSection " +this.SectionID +": Growth slowed due to too much water");
+			WriteLogs("Plant Growth slows due to Excess Water");
 		}
 		if(soilSensor.getFertilizerLevel() < plants.getCurrentFertilizerNeed()) {
 			//System.out.println("GardenSection " +this.SectionID +": Growth slowed due to low fertilizer");
 			//System.out.println("GardenSection " +this.SectionID +": Fertilizer need= " +plants.getCurrentFertilizerNeed() +"Fertilizer Level = " +soilSensor.getFertilizerLevel());
 			growthDivisionFactor += 10;
+			WriteLogs("Plant Growth slows due to Low Fertilizer");
 		}
 		plants.grows(growthDivisionFactor);
 	}
@@ -377,7 +435,7 @@ public class GardenSection implements Runnable{
 				//System.out.println("GardenSection " +this.SectionID +" pumps used to suck too much water");
 				
 				soilSensor.setWaterLevel(12*waterNeed);
-
+				WriteLogs("Pumps Suck Excess Water");
 				//System.out.println("GardenSection " +this.SectionID +": Water Level=" +waterLevel +" Water Need=" +waterNeed);
 			}
 			return false;
@@ -415,14 +473,19 @@ public class GardenSection implements Runnable{
 		else if(!isSoilSensor) {
 			if(hours >= 0 && hours < 2 && !sprinklers.getSprinklerStatus()) {
 				sprinklers.turnOnSprinkler();
+				WriteLogs("Sprinklers turned ON");
 			}
 			else if(hours > 2 && sprinklers.getSprinklerStatus()) {
-				sprinklers.turnOffSprinkler(); 
+				sprinklers.turnOffSprinkler();
+				WriteLogs("Sprinklers turned OFF");
 			}
 		}
 		else {
-			if(isSprinklerNeeded() && !sprinklers.getSprinklerStatus()) {
-				sprinklers.turnOnSprinkler();
+			if(isSprinklerNeeded()) {
+				if(!sprinklers.getSprinklerStatus()) {
+					sprinklers.turnOnSprinkler();
+					WriteLogs("Sprinklers turned ON");
+				}
 				//putTimestamp();
 				//System.out.println("GardenSection " +this.SectionID +": Sprinkler turned ON");
 			//	System.out.println("GardenSection " +this.SectionID +": Water Level=" +waterLevel +" Water Need=" +waterNeed);
@@ -430,7 +493,8 @@ public class GardenSection implements Runnable{
 			else {
 				
 				if(sprinklers.getSprinklerStatus()) {
-					sprinklers.turnOffSprinkler(); 
+					sprinklers.turnOffSprinkler();
+					WriteLogs("Sprinklers turned OFF");
 					//putTimestamp();
 				//	System.out.println("GardenSection " +this.SectionID +": Water Level=" +waterLevel +" Water Need=" +waterNeed);
 				//	System.out.println("GardenSection " +this.SectionID +": Sprinkler turned OFF");
@@ -457,19 +521,23 @@ public class GardenSection implements Runnable{
 		else if(!isTempSensor) {
 			if(hours >= 0 && hours < 6 && !heaters.getHeaterStatus()) {
 				heaters.turnOnHeater();
+				WriteLogs("Heaters turned ON");
 			}
 			else if(hours > 8 && heaters.getHeaterStatus()) {
 				heaters.turnOffHeater();
+				WriteLogs("Heaters turned OFF");
 			}
 		}
 		else {
 			if(tempSensor.getCurrentTemprature() < 40 && !heaters.getHeaterStatus()) {
 				heaters.turnOnHeater();
+				WriteLogs("Heaters turned ON");
 				//putTimestamp();
 				//System.out.println("GardenSection " +this.SectionID +": Heater turned ON" +" Temp-" +tempSensor.getCurrentTemprature());
 			}
 			if(tempSensor.getCurrentTemprature() > 70 && heaters.getHeaterStatus()) {
 				heaters.turnOffHeater();
+				WriteLogs("Heaters turned OFF");
 				//putTimestamp();
 				//System.out.println("GardenSection " +this.SectionID +": Heater turned OFF" +" Temp-" +tempSensor.getCurrentTemprature());
 			}
@@ -478,7 +546,8 @@ public class GardenSection implements Runnable{
 	}
 	
 	private void putFertilizers() {
-		soilSensor.setFertilizerLevel(150);
+		soilSensor.setFertilizerLevel(plants.getCurrentFertilizerNeed()*24);
+		WriteLogs("Fertilizers Balanced");
 		//System.out.println("GardenSection " +this.SectionID +": Fertilizers put");
 	}
 	
@@ -493,6 +562,7 @@ public class GardenSection implements Runnable{
 			e.printStackTrace();
 		}
 	}
+	
 	private void CreateLogMessage() {
 		
 		DecimalFormat numberFormat = new DecimalFormat("#.00");
@@ -522,7 +592,7 @@ public class GardenSection implements Runnable{
 			SprinklerStatusString = "On";
 		}
 		else {
-			SprinklerStatusString = "On";
+			SprinklerStatusString = "Off";
 		}
 		
 		String HeaterStatusString;
@@ -530,7 +600,7 @@ public class GardenSection implements Runnable{
 			HeaterStatusString = "On";
 		}
 		else {
-			HeaterStatusString = "On";
+			HeaterStatusString = "Off";
 		}
 		
 		LogMessage =
@@ -546,12 +616,11 @@ public class GardenSection implements Runnable{
 				+WaterLevelString	+","	+WaterNeedString	+","	+SprinklerStatusString	+","
 				+TemperatureString	+","	+HeaterStatusString	+","	+FertilizerLevelString	+","
 				
-				+lowLightEvent.getEventStatus()					+","	
-				+pestEvent.getEventStatus()						+","	
-				+powerFailureEvent.getEventStatus()				+","
-				+rainEvent.getEventStatus()						+","	
-				+waterCutOffEvent.getEventStatus();
+				+lowLightEvent.getEventStatus()					+","	+lowLightEvent.getSeverity()			+","
+				+pestEvent.getEventStatus()						+","	+pestEvent.getSeverity()				+","
+				+powerFailureEvent.getEventStatus()				+","	+powerFailureEvent.getTimeRemaining()	+","
+				+rainEvent.getEventStatus()						+","	+rainEvent.getTimeRemaining()			+","
+				+waterCutOffEvent.getEventStatus()				+","	+waterCutOffEvent.getTimeRemaining()	+","
 				;
-		
 	}
 }

@@ -18,7 +18,7 @@ package module.sensors;
 public class SoilSensor {
 	
 	private double waterLevel = 10;
-	private double fertilizerLevel = 50;
+	private double fertilizerLevel = 500;
 	
 	private int isThereSensor;
 	// +ve value of this sensor indicates there is sensor

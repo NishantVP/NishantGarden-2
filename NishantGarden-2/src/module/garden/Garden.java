@@ -37,7 +37,7 @@ public class Garden {
 		this.sectionConfigList = incomingSectionConfigList;
 		this.GardenManagerScreen = screen;
 		System.out.println("Garden: New Garden Created");
-		GardenManagerScreen.updateLabel("Garden Object Created");
+		//GardenManagerScreen.updateLabel("Garden Object Created");
 		
 		GlobalTime = new GardenTimer();
 		new Thread(GlobalTime).start();

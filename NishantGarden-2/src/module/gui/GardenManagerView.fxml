@@ -2,10 +2,51 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.65" fx:controller="module.gui.GardenManagerController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="module.gui.GardenManagerController">
    <children>
-      <Label fx:id="gardenStatus" layoutX="24.0" layoutY="22.0" text="Garden Status" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+      <Label fx:id="gardenStatus" layoutX="24.0" layoutY="22.0" text="Time" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+      <AnchorPane layoutX="5.0" layoutY="5.0" prefHeight="50.0" prefWidth="780.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="100.0">
+         <children>
+            <Label text="Section 1 Status" />
+            <Label fx:id="section1" text="Label" AnchorPane.topAnchor="20.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="15.0" layoutY="15.0" prefHeight="50.0" prefWidth="780.0" AnchorPane.topAnchor="175.0">
+         <children>
+            <Label text="Section 2 Status" />
+            <Label fx:id="section2" text="Label" AnchorPane.topAnchor="20.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="15.0" layoutY="15.0" prefHeight="50.0" prefWidth="780.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="250.0">
+         <children>
+            <Label text="Section 3 Status" />
+            <Label fx:id="section3" text="Label" AnchorPane.topAnchor="20.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="15.0" layoutY="15.0" prefHeight="50.0" prefWidth="780.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="325.0">
+         <children>
+            <Label text="Section 4 Status" />
+            <Label fx:id="section4" text="Label" AnchorPane.topAnchor="20.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="15.0" layoutY="15.0" prefHeight="50.0" prefWidth="780.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="400.0">
+         <children>
+            <Label text="Section 5 Status" />
+            <Label fx:id="section5" text="Label" AnchorPane.topAnchor="20.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="15.0" layoutY="15.0" prefHeight="50.0" prefWidth="780.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="475.0">
+         <children>
+            <Label text="Section 6 Status" />
+            <Label fx:id="section6" text="Label" AnchorPane.topAnchor="20.0" />
+         </children>
+      </AnchorPane>
+      <Label fx:id="time" text="Time" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="25.0">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

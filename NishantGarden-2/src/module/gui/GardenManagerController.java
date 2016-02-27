@@ -38,6 +38,13 @@ public class GardenManagerController implements Initializable {
 	private Garden NishantGarden;
 	
 	@FXML private Label gardenStatus;
+	@FXML private Label time;
+	@FXML private Label section1;
+	@FXML private Label section2;
+	@FXML private Label section3;
+	@FXML private Label section4;
+	@FXML private Label section5;
+	@FXML private Label section6;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -53,17 +60,34 @@ public class GardenManagerController implements Initializable {
 	
 	
 	//Interface to update the Status of the Garden on UI
-	public synchronized void updateLabel(String s) {
-		this.GardenStatus = "Garden Status: " +s;
+	public synchronized void updateLabel(String s, int SectionID) {
 		
 		Task<Boolean> task = new Task<Boolean>() {
             @Override 
             public Boolean call() {    
-            	System.out.println("GardenManagerController: Inside Task ");
+            	//System.out.println("GardenManagerController: Inside Task ");
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                    	gardenStatus.setText(GardenStatus);                      
+                    	//gardenStatus.setText(GardenStatus); 
+                    	if(SectionID == 1) {
+                    		section1.setText(s);
+                    	}
+                    	else if(SectionID == 2) {
+                    		section2.setText(s);
+                    	}
+                    	else if(SectionID == 3) {
+                    		section3.setText(s);
+                    	}
+                    	else if(SectionID == 4) {
+                    		section4.setText(s);
+                    	}
+                    	else if(SectionID == 5) {
+                    		section5.setText(s);
+                    	}
+                    	else if(SectionID == 6) {
+                    		section6.setText(s);
+                    	}
                     }
                 });
                 try {
@@ -77,5 +101,37 @@ public class GardenManagerController implements Initializable {
        t.setDaemon(true);
        t.start();
 	}
+	
+	public synchronized void updateTime(String s, int SectionID) {
+		//this.GardenStatus = "Garden Status: " +s;
+		
+		if(SectionID ==1) {
+			Task<Boolean> task = new Task<Boolean>() {
+	            @Override 
+	            public Boolean call() {    
+	            	//System.out.println("GardenManagerController: Inside Task ");
+	                Platform.runLater(new Runnable() {
+	                    @Override
+	                    public void run() {
+	                    	//gardenStatus.setText(GardenStatus);
+	                    	
+	                    	time.setText(s);
+	                    	
+	                    }
+	                });
+	                try {
+	                  Thread.sleep(1000);
+	                }
+	                catch (InterruptedException e) {}
+	            return Boolean.valueOf(true);               
+	          }        
+	       };           
+	       Thread t = new Thread(task);
+	       t.setDaemon(true);
+	       t.start();
+		}
+		
+	}
 
+	
 }
