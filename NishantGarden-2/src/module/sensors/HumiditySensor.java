@@ -15,14 +15,14 @@ package module.sensors;
  * @author nishant
  *
  */
-public class HumuditySensor {
+public class HumiditySensor {
 	
 	private double currentHumidity= 50;
 	private int isThereSensor;
 	// +ve value of this sensor indicates there is sensor
 	// -ve value indicates there is no sensor
 	
-	public HumuditySensor(boolean sensorAvailability) {
+	public HumiditySensor(boolean sensorAvailability) {
 		if(sensorAvailability) {
 			isThereSensor = 1;
 		}
@@ -37,5 +37,6 @@ public class HumuditySensor {
 	public void setCurrentTemprature(double value) {
 		this.currentHumidity = value;
 	}
+
 
 }

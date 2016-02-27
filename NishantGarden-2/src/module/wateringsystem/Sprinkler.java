@@ -21,10 +21,12 @@ public class Sprinkler {
 	
 	private SoilSensor soilSensor; 
 	private boolean onOffStatus;
+	private double hourlyWaterSupply;
 	
-	public Sprinkler (SoilSensor sensor) {
-		this.soilSensor = sensor;
+	public Sprinkler () {
+		
 		this.onOffStatus = false;
+		this.hourlyWaterSupply = 50;
 	}
 	
 	public void turnOnSprinkler() {
@@ -37,6 +39,14 @@ public class Sprinkler {
 	
 	public boolean getSprinklerStatus () {
 		return onOffStatus;
+	}
+	
+	public double getHourlySupply() {
+		return this.hourlyWaterSupply;
+	
+	}
+	public void setHourlySupply(double value) {
+		this.hourlyWaterSupply = value;
 	}
 
 }

@@ -17,7 +17,7 @@ package module.sensors;
  */
 public class SoilSensor {
 	
-	private double waterLevel = 50;
+	private double waterLevel = 10;
 	private double fertilizerLevel = 50;
 	
 	private int isThereSensor;
@@ -35,7 +35,8 @@ public class SoilSensor {
 	
 	//--Getters and Setters--//
 	public double getWaterLevel() {
-			return this.waterLevel*isThereSensor;
+			double temp = this.waterLevel*this.isThereSensor;
+			return temp;
 		
 	}
 	public void setWaterLevel(double value) {

@@ -23,7 +23,7 @@ public class GardenTimer implements Runnable {
 	 * @see java.lang.Runnable#run()
 	 */
 	private long timeInSeconds = 0;
-	
+	private long simulationSpeed = 100;
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -31,7 +31,7 @@ public class GardenTimer implements Runnable {
 		
 		while(true) {	
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(1000/simulationSpeed);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace(); 

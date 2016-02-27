@@ -19,11 +19,11 @@ import module.sensors.TemperatureSensor;
  */
 public class Heater {
 	
-	private TemperatureSensor tempratureSensor; 
+	
 	private boolean onOffStatus;
 	
-	public Heater (TemperatureSensor sensor) {
-		this.tempratureSensor = sensor;
+	public Heater () {
+		
 		this.onOffStatus = false;
 	}
 	

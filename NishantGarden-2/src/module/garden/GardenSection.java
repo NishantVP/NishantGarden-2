@@ -12,6 +12,7 @@
 package module.garden;
 
 import module.gui.GardenManagerController;
+import module.heatingsystem.Heater;
 import module.plants.CornPlant;
 import module.plants.LemonsPlant;
 import module.plants.Plants;
@@ -19,7 +20,11 @@ import module.plants.PotatoesPlant;
 import module.plants.RicePlant;
 import module.plants.VegitablesPlant;
 import module.plants.WheatPlant;
+import module.sensors.HumiditySensor;
+import module.sensors.SoilSensor;
+import module.sensors.TemperatureSensor;
 import module.timesimulation.GardenTimer;
+import module.wateringsystem.Sprinkler;
 
 /**
  * @author nishant
@@ -33,6 +38,32 @@ public class GardenSection implements Runnable{
 	private GardenManagerController GardenManagerScreen;
 	private GardenTimer GlobalTime;
 	
+	private double waterNeed;
+	private double waterLevel;
+	private double hourlySupplySingle;
+	private double hourlySupplyTotal;
+	
+	private int numberOfSprinklers;
+	private int numberOfHeaters;
+	
+	private SoilSensor soilSensor;
+	private TemperatureSensor tempSensor;
+	private HumiditySensor humiditySensor;
+	
+	private Sprinkler sprinklers;
+	private Heater heaters;
+	
+	private double threadRunFreq;
+	private long lastTime;
+	private long currentTime;
+	private long days;
+	private long lastDay;
+	private long halfDays;
+	private long lastHalfDay;
+	
+	private long hours;
+	private long lastHour;
+	private long minutes;
 	
 	public GardenSection(SectionConfiguration incomingConfig, int id, 
 							GardenManagerController screen, GardenTimer time) {
@@ -40,7 +71,17 @@ public class GardenSection implements Runnable{
 		this.SectionID = id;
 		this.GardenManagerScreen = screen;
 		this.GlobalTime = time;
+		this.numberOfSprinklers = SectionConfig.getNumberOfSprinklers();
+		this.numberOfHeaters = SectionConfig.getNumberOfHeaters();
 		//System.out.println("GardenSection: " +"In contructor of " +SectionID );
+		
+		soilSensor = new SoilSensor(SectionConfig.getSoilWaterSensors());
+		tempSensor = new TemperatureSensor(SectionConfig.getTempratureSensors());
+		humiditySensor = new HumiditySensor(SectionConfig.getHumiditySensors());
+		sprinklers = new Sprinkler();
+		heaters = new Heater();
+		
+		
 	}
 
 	@Override
@@ -54,9 +95,79 @@ public class GardenSection implements Runnable{
 		}
 		System.out.println("GardenSection: " +"Thread for Section " +this.SectionID +" created");
 		
+		setPlantType();
+		
+		if(isSprinklerNeeded()) {
+			sprinklers.turnOnSprinkler();
+			putTimestamp();
+			System.out.println("GardenSection " +this.SectionID +": Sprinkler turned ON");
+		}
+		
+		while(true) {
+			currentTime = GlobalTime.getCurrentTime();
+			//System.out.println("GardenSection " +this.SectionID +": time- " +currentTime);
+			
+			if(currentTime == lastTime) {
+				//Do nothing	
+			}
+			// If time has changed, do tasks
+			else {
+				//Tasks that will be performed every minute
+				calculateDaysHoursMinutes();
+				soilSensor.decreaseWaterLevelBy(waterNeed/60);
+				if(sprinklers.getSprinklerStatus()) {
+					soilSensor.increaseWaterLevelBy(hourlySupplyTotal/60);
+				}
+				
+				if(minutes%15 == 0) {
+					//Do this every 15 min
+					if(isSprinklerNeeded()) {
+						sprinklers.turnOnSprinkler();
+						putTimestamp();
+						System.out.println("GardenSection " +this.SectionID +": Sprinkler turned ON");
+					}
+					else {
+						if(sprinklers.getSprinklerStatus()) {
+							sprinklers.turnOffSprinkler(); 
+							putTimestamp();
+							System.out.println("GardenSection " +this.SectionID +": Sprinkler turned OFF");
+						}
+					}
+				}
+				
+				if(lastHour != hours) {
+					//Do hourly tasks here
+					//System.out.println("GardenSection " +this.SectionID +": hours- " +hours);
+					lastHour = hours;
+				}
+				
+				if(lastHalfDay != halfDays) {
+					//Do twice a day tasks here
+					//System.out.println("GardenSection " +this.SectionID +": Half Days- " +halfDays +" days " +days);
+					
+					lastHalfDay = halfDays;
+				}
+				
+				if(lastDay != days) {
+					//Do Daily tasks here
+					//System.out.println("GardenSection " +this.SectionID +": Days- "  +days);
+					plants.grows();
+					System.out.println("GardenSection " +this.SectionID +": Days-"  +days +" growth-" +plants.getGrowth());
+					
+					lastDay = days;
+				}
+			}
+		
+			lastTime = currentTime;
+		}
+		
+	}
+	
+	private void setPlantType() {
+		
 		if(SectionConfig.getPlantType().equals("Wheat")) {
 			plants = new WheatPlant();
-			System.out.println("GardenSection: " +"Water Need " +plants.getCurrentWaterNeed());
+			//System.out.println("GardenSection: " +"Water Need " +plants.getCurrentWaterNeed());
 		}
 		else if(SectionConfig.getPlantType().equals("Lemons")) {
 			plants = new LemonsPlant();
@@ -79,17 +190,49 @@ public class GardenSection implements Runnable{
 			plants = new WheatPlant();
 		}
 		
+	}
 	
-		while(true) {
-			System.out.println("GardenSection " +this.SectionID +": time- " +GlobalTime.getCurrentTime());
-			try {
-				Thread.sleep(900);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	private boolean isSprinklerNeeded () {
+		//Call this every min
+		waterNeed = plants.getCurrentWaterNeed();
+		waterLevel= soilSensor.getWaterLevel();
+		
+		hourlySupplySingle = sprinklers.getHourlySupply();
+		hourlySupplyTotal = hourlySupplySingle * numberOfSprinklers;
+		
+		//System.out.println("GardenSection " +this.SectionID +" Water Level-" +waterLevel +" Water Need-" +waterNeed);
+		
+		if(waterNeed > waterLevel) {
+			return true;
+		}
+		else {
+			return false;
 		}
 		
+		
+	}
+	
+	
+	
+	private void calculateDaysHoursMinutes () {
+		long numberOfMinutesSinceStart;
+		
+		numberOfMinutesSinceStart = currentTime;
+		days = numberOfMinutesSinceStart / 1440;
+		halfDays = numberOfMinutesSinceStart / 720;
+		long temp1 = numberOfMinutesSinceStart % 1440;
+		hours = temp1 / 60;
+		minutes = temp1 % 60;
+		
+		//System.out.println("GardenSection: " +this.SectionID  +" TimeStamp: " +days +" days " 
+		//						+hours +" hours " +minutes +" minutes");
+		
+	}
+	
+	private void putTimestamp() {
+		System.out.println("GardenSection: " +this.SectionID  +" TimeStamp: " +days +" days " 
+										+hours +" hours " +minutes +" minutes");
+				
 	}
 
 }

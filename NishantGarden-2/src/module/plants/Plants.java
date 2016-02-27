@@ -18,7 +18,7 @@ package module.plants;
 public abstract class Plants {
 	
 	//--Variables--//
-	protected double growth; 
+	protected double currentGrowth; 
 	// Value of growth defines how much has plant grown.
 	// growth = 0 means its a seed, growth = 1 means its fully grown plant
 	
@@ -37,8 +37,8 @@ public abstract class Plants {
 	
 	//--Constructors--//
 	protected Plants() {
-		this.growth = 1;
-		this.growthRate = 1;
+		this.currentGrowth = 1;
+		this.growthRate = 3;
 		//Default plant in a garden takes 100 days to grow from seed.
 		this.maxArea = 0.25;
 		//Default plant in a garden takes 0.25 sq.m area (i.e. 50 cm by 50 cm)
@@ -49,10 +49,10 @@ public abstract class Plants {
 	
 	//--Getters and Setters--//
 	public double getGrowth() {
-		return this.growth;
+		return this.currentGrowth;
 	}
 	public void setGrowth(double value) {
-		this.growth = value;
+		this.currentGrowth = value;
 	}
 	
 	public double getGrowthRate() {
@@ -91,10 +91,13 @@ public abstract class Plants {
 	}
 	
 	public double getCurrentWaterNeed() {
-		return waterIntakeFactor*growth;
+		return waterIntakeFactor*currentGrowth;
 	}
 	public double getCurrentFertilizerNeed() {
-		return fertilizerIntakeFactor*growth;
+		return fertilizerIntakeFactor*currentGrowth;
 	}
-
+	
+	public void grows() {
+		this.currentGrowth += growthRate; 
+	}
 }

@@ -44,7 +44,7 @@ public class Garden {
 		//-- Create Garden Section threads -- //
 		section1 = new GardenSection(sectionConfigList.get(0),1,GardenManagerScreen,GlobalTime);
 	    new Thread(section1).start();
-		section2 = new GardenSection(sectionConfigList.get(1),2,GardenManagerScreen,GlobalTime);
+		/*section2 = new GardenSection(sectionConfigList.get(1),2,GardenManagerScreen,GlobalTime);
 	    new Thread(section2).start();
 		section3 = new GardenSection(sectionConfigList.get(2),3,GardenManagerScreen,GlobalTime);
 	    new Thread(section3).start();
@@ -53,7 +53,7 @@ public class Garden {
 		section5 = new GardenSection(sectionConfigList.get(4),5,GardenManagerScreen,GlobalTime);
 	    new Thread(section5).start();
 		section6 = new GardenSection(sectionConfigList.get(5),6,GardenManagerScreen,GlobalTime);
-	    new Thread(section6).start();
+	    new Thread(section6).start();*/
 	}
 	
 
