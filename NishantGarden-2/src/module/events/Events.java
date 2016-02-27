@@ -30,7 +30,11 @@ public class Events {
 	}
 	
 	public void happens () {
-		
+		this.eventStatus = true;
+	}
+	
+	public void ends() {
+		this.eventStatus = false;
 	}
 
 }

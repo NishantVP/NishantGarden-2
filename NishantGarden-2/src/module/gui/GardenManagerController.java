@@ -53,7 +53,7 @@ public class GardenManagerController implements Initializable {
 	
 	
 	//Interface to update the Status of the Garden on UI
-	public void updateLabel(String s) {
+	public synchronized void updateLabel(String s) {
 		this.GardenStatus = "Garden Status: " +s;
 		
 		Task<Boolean> task = new Task<Boolean>() {

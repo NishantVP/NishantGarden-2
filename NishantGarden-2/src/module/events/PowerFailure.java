@@ -31,9 +31,14 @@ public class PowerFailure  extends Events {
 	}
 	public void decreaseTimeReaming() {
 		this.timeRemaining --;
+		if(this.timeRemaining <= 0) {
+			this.timeRemaining = 0;
+			this.eventStatus =false;
+		}
 	}
 	
 	public void happens () {	
+		this.eventStatus = true;
 		Random rand = new Random();
 		int randomNum = rand.nextInt((24 - 1) + 1) + 1;
 		this.timeRemaining = randomNum;

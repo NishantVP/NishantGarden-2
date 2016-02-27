@@ -28,8 +28,16 @@ public class LowDayLight extends Events{
 	public double getSeverity() {
 		return this.severity;
 	}
+	public void decreaseSeverity() {
+		this.severity -= 0.5;
+		if(severity <= 0) {
+			this.severity = 0;
+			this.eventStatus =false;
+		}
+	}
 	
-	public void happens () {	
+	public void happens () {
+		this.eventStatus = true;
 		Random rand = new Random();
 		int randomNum = rand.nextInt((100 - 10) + 1) + 10;
 		this.severity = randomNum;
