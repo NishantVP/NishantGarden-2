@@ -20,22 +20,17 @@ public class SoilSensor {
 	private double waterLevel = 10;
 	private double fertilizerLevel = 500;
 	
-	private int isThereSensor;
+	
 	// +ve value of this sensor indicates there is sensor
 	// -ve value indicates there is no sensor
 	
-	public SoilSensor(boolean sensorAvailability) {
-		if(sensorAvailability) {
-			isThereSensor = 1;
-		}
-		else {
-			isThereSensor = -1;
-		}
+	public SoilSensor() {
+		
 	}
 	
 	//--Getters and Setters--//
 	public double getWaterLevel() {
-			double temp = this.waterLevel*this.isThereSensor;
+			double temp = this.waterLevel;
 			return temp;
 		
 	}
@@ -44,7 +39,7 @@ public class SoilSensor {
 	}
 	
 	public double getFertilizerLevel() {
-		return this.fertilizerLevel*isThereSensor;
+		return this.fertilizerLevel;
 	}
 	public void setFertilizerLevel(double value) {
 		this.fertilizerLevel = value;

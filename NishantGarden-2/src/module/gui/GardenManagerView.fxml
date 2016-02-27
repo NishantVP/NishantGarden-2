@@ -48,5 +48,6 @@
             <Font size="25.0" />
          </font>
       </Label>
+      <Label text="Please Stop the program and check Log files to see detailed status" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" />
    </children>
 </AnchorPane>

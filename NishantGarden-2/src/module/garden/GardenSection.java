@@ -106,9 +106,9 @@ public class GardenSection implements Runnable{
 		this.isSoilSensor = SectionConfig.getSoilWaterSensors();
 		this.isHumiditySensor = SectionConfig.getHumiditySensors();
 		
-		soilSensor = new SoilSensor(SectionConfig.getSoilWaterSensors());
-		tempSensor = new TemperatureSensor(SectionConfig.getTempratureSensors());
-		humiditySensor = new HumiditySensor(SectionConfig.getHumiditySensors());
+		soilSensor = new SoilSensor();
+		tempSensor = new TemperatureSensor();
+		humiditySensor = new HumiditySensor();
 		sprinklers = new Sprinkler();
 		heaters = new Heater();
 		
@@ -169,6 +169,7 @@ public class GardenSection implements Runnable{
 		
 		WriteLogs("Section Created");
 		
+		UpdateGUI();
 		while(true) {
 			currentTime = GlobalTime.getCurrentTime();
 			//System.out.println("GardenSection " +this.SectionID +": time- " +currentTime);
@@ -210,6 +211,8 @@ public class GardenSection implements Runnable{
 					EffectsDueToRandomEvents();
 					PlantGrowth();
 					
+					UpdateGUI();
+					
 					lastHour = hours;
 					
 				}
@@ -217,7 +220,6 @@ public class GardenSection implements Runnable{
 				if(lastHalfDay != halfDays) {
 					//Do twice a day tasks here
 					//System.out.println("GardenSection " +this.SectionID +": Half Days- " +halfDays +" days " +days);
-					UpdateGUI();
 					
 					lastHalfDay = halfDays;
 				}
@@ -229,7 +231,8 @@ public class GardenSection implements Runnable{
 					System.out.println("GardenSection " +this.SectionID +": Days-"  +days +" growth-" +plants.getGrowth());
 					soilSensor.decreaseFertilizerLevelBy(plants.getCurrentFertilizerNeed()*24);
 					
-					putFertilizers();
+					RandomEventMayHappen();
+					
 					
 					lastDay = days;
 				}
@@ -238,8 +241,8 @@ public class GardenSection implements Runnable{
 					//Do tasks every three days here
 					
 					//System.out.println("GardenSection " +this.SectionID +": Days- "  +days);
+					putFertilizers();
 					
-					RandomEventMayHappen();
 				}
 			}
 		
@@ -254,16 +257,16 @@ public class GardenSection implements Runnable{
 		String RandomEvent = "";
 		
 		if(lowLightEvent.getEventStatus()) {
-			RandomEvent += " Low Sunlight";
+			RandomEvent = " Low Sunlight";
 		}
 		if(pestEvent.getEventStatus()) {
-			RandomEvent += " Pest Attacks";
+			RandomEvent = " Pest Attacks";
 		}
 		if(powerFailureEvent.getEventStatus()) {
-			RandomEvent += " Power Failure";
+			RandomEvent = " Power Failure";
 		}
 		if(rainEvent.getEventStatus()) {
-			RandomEvent += " Rain";
+			RandomEvent = " Rain";
 		}
 		if(waterCutOffEvent.getEventStatus()) {
 			RandomEvent = " Water Cut Off";
@@ -546,7 +549,7 @@ public class GardenSection implements Runnable{
 	}
 	
 	private void putFertilizers() {
-		soilSensor.setFertilizerLevel(plants.getCurrentFertilizerNeed()*24);
+		soilSensor.setFertilizerLevel(plants.getCurrentFertilizerNeed()*65);
 		WriteLogs("Fertilizers Balanced");
 		//System.out.println("GardenSection " +this.SectionID +": Fertilizers put");
 	}

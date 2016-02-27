@@ -76,7 +76,7 @@ public class StartScreenController implements Initializable {
 		
 		Scene scene = new Scene(root);
 		Stage stage = (Stage) this.StartGarden.getScene().getWindow();//new Stage();
-		stage.setTitle("Section Properties Editor");
+		stage.setTitle("Garden Overview");
 		stage.setScene(scene);
 		stage.show();    
 	}

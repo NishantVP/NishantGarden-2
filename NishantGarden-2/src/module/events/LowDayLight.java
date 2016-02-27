@@ -29,7 +29,7 @@ public class LowDayLight extends Events{
 		return this.severity;
 	}
 	public void decreaseSeverity() {
-		this.severity -= 0.5;
+		this.severity -= 1;
 		if(severity <= 0) {
 			this.severity = 0;
 			this.eventStatus =false;
