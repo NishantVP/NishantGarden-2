@@ -19,7 +19,13 @@ public class WheatPlant extends Plants {
 	
 	//--Constructors--//
 	public WheatPlant() {
-		super();
+		this.currentGrowth = 1;
+		this.growthRate = 1.5;
+		//Default plant in a garden takes 100 days to grow from seed.
+		this.maxArea = 0.25;
+		//Default plant in a garden takes 0.25 sq.m area (i.e. 50 cm by 50 cm)
+		this.waterIntakeFactor = 2.5;
+		this.fertilizerIntakeFactor = 0.5;
 	}
 
 }

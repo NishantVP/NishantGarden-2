@@ -16,5 +16,15 @@ package module.plants;
  *
  */
 public class PotatoesPlant extends Plants {
+	
+	public PotatoesPlant() {
+		this.currentGrowth = 1;
+		this.growthRate = 1;
+		//Default plant in a garden takes 100 days to grow from seed.
+		this.maxArea = 0.25;
+		//Default plant in a garden takes 0.25 sq.m area (i.e. 50 cm by 50 cm)
+		this.waterIntakeFactor = 2;
+		this.fertilizerIntakeFactor = 0.5;
+	}
 
 }

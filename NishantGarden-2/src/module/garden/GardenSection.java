@@ -114,25 +114,16 @@ public class GardenSection implements Runnable{
 			else {
 				//Tasks that will be performed every minute
 				calculateDaysHoursMinutes();
+				
 				soilSensor.decreaseWaterLevelBy(waterNeed/60);
+				
 				if(sprinklers.getSprinklerStatus()) {
 					soilSensor.increaseWaterLevelBy(hourlySupplyTotal/60);
 				}
 				
 				if(minutes%15 == 0) {
 					//Do this every 15 min
-					if(isSprinklerNeeded()) {
-						sprinklers.turnOnSprinkler();
-						putTimestamp();
-						System.out.println("GardenSection " +this.SectionID +": Sprinkler turned ON");
-					}
-					else {
-						if(sprinklers.getSprinklerStatus()) {
-							sprinklers.turnOffSprinkler(); 
-							putTimestamp();
-							System.out.println("GardenSection " +this.SectionID +": Sprinkler turned OFF");
-						}
-					}
+					onOffSprinkler();
 				}
 				
 				if(lastHour != hours) {
@@ -208,11 +199,7 @@ public class GardenSection implements Runnable{
 		else {
 			return false;
 		}
-		
-		
 	}
-	
-	
 	
 	private void calculateDaysHoursMinutes () {
 		long numberOfMinutesSinceStart;
@@ -232,7 +219,21 @@ public class GardenSection implements Runnable{
 	private void putTimestamp() {
 		System.out.println("GardenSection: " +this.SectionID  +" TimeStamp: " +days +" days " 
 										+hours +" hours " +minutes +" minutes");
-				
+	}
+	
+	private void onOffSprinkler() {
+		if(isSprinklerNeeded()) {
+			sprinklers.turnOnSprinkler();
+			putTimestamp();
+			System.out.println("GardenSection " +this.SectionID +": Sprinkler turned ON");
+		}
+		else {
+			if(sprinklers.getSprinklerStatus()) {
+				sprinklers.turnOffSprinkler(); 
+				putTimestamp();
+				System.out.println("GardenSection " +this.SectionID +": Sprinkler turned OFF");
+			}
+		}
 	}
 
 }
