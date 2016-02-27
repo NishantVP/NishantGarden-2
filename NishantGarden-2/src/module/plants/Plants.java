@@ -49,10 +49,16 @@ public abstract class Plants {
 	
 	//--Getters and Setters--//
 	public double getGrowth() {
+		if(this.currentGrowth > 100) {
+			currentGrowth = 100;
+		}
 		return this.currentGrowth;
 	}
 	public void setGrowth(double value) {
 		this.currentGrowth = value;
+		if(this.currentGrowth > 100) {
+			currentGrowth = 100;
+		}
 	}
 	
 	public double getGrowthRate() {
@@ -91,13 +97,19 @@ public abstract class Plants {
 	}
 	
 	public double getCurrentWaterNeed() {
+		if(this.currentGrowth > 100) {
+			currentGrowth = 100;
+		}
 		return waterIntakeFactor*currentGrowth;
 	}
 	public double getCurrentFertilizerNeed() {
 		return fertilizerIntakeFactor*currentGrowth;
 	}
 	
-	public void grows() {
-		this.currentGrowth += growthRate; 
+	public void grows(double div) {
+		this.currentGrowth += (growthRate/div);
+		if(this.currentGrowth > 100) {
+			currentGrowth = 100;
+		}
 	}
 }

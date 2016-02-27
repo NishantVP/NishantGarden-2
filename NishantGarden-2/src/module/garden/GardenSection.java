@@ -11,6 +11,11 @@
  */
 package module.garden;
 
+import module.events.LowDayLight;
+import module.events.PestAttack;
+import module.events.PowerFailure;
+import module.events.Rain;
+import module.events.WaterCutOff;
 import module.gui.GardenManagerController;
 import module.heatingsystem.Heater;
 import module.plants.CornPlant;
@@ -65,6 +70,12 @@ public class GardenSection implements Runnable{
 	private long lastHour;
 	private long minutes;
 	
+	private PestAttack pestEvent;
+	private PowerFailure powerFailureEvent;
+	private Rain rainEvent;
+	private WaterCutOff waterCutOffEvent;
+	private LowDayLight lowLightEvent;
+	
 	public GardenSection(SectionConfiguration incomingConfig, int id, 
 							GardenManagerController screen, GardenTimer time) {
 		this.SectionConfig = incomingConfig;
@@ -113,6 +124,7 @@ public class GardenSection implements Runnable{
 			// If time has changed, do tasks
 			else {
 				//Tasks that will be performed every minute
+				
 				calculateDaysHoursMinutes();
 				
 				soilSensor.decreaseWaterLevelBy(waterNeed/60);
@@ -120,15 +132,23 @@ public class GardenSection implements Runnable{
 				if(sprinklers.getSprinklerStatus()) {
 					soilSensor.increaseWaterLevelBy(hourlySupplyTotal/60);
 				}
+				if(heaters.getHeaterStatus()) {
+					tempSensor.heaterIncreaseTemp();
+				}
+				
 				
 				if(minutes%15 == 0) {
 					//Do this every 15 min
 					onOffSprinkler();
+					PlantGrowth(92);
 				}
 				
 				if(lastHour != hours) {
 					//Do hourly tasks here
 					//System.out.println("GardenSection " +this.SectionID +": hours- " +hours);
+					naturalChangeTemperature();
+					onOffHeater();
+					
 					lastHour = hours;
 				}
 				
@@ -142,15 +162,36 @@ public class GardenSection implements Runnable{
 				if(lastDay != days) {
 					//Do Daily tasks here
 					//System.out.println("GardenSection " +this.SectionID +": Days- "  +days);
-					plants.grows();
 					System.out.println("GardenSection " +this.SectionID +": Days-"  +days +" growth-" +plants.getGrowth());
 					
+					soilSensor.decreaseFertilizerLevelBy(plants.getCurrentFertilizerNeed());
 					lastDay = days;
+				}
+				
+				if(days%3 == 0) {
+					//Do tasks every three days here
+					//System.out.println("GardenSection " +this.SectionID +": Days- "  +days);
+					putFertilizers();
 				}
 			}
 		
 			lastTime = currentTime;
 		}
+		
+	}
+	
+	private void PlantGrowth(double div) {
+		double divisionFactor = div;
+		
+		if(waterLevel <0) {
+			System.out.println("GardenSection " +this.SectionID +": Growth stopped due to low water");
+			divisionFactor += 10000;
+		}
+		if(soilSensor.getFertilizerLevel() < 100) {
+			System.out.println("GardenSection " +this.SectionID +": Growth slowed due to low fertilizer");
+			divisionFactor += 10;
+		}
+		
 		
 	}
 	
@@ -235,5 +276,33 @@ public class GardenSection implements Runnable{
 			}
 		}
 	}
-
+	
+	private void naturalChangeTemperature () {
+		//Day time
+		if(hours > 6 && hours < 18) {
+			tempSensor.naturalIncreaseTemp();
+		}
+		//Night time
+		else {
+			tempSensor.naturalDecreaseTemp();
+		}
+	}
+	
+	private void onOffHeater() {
+		if(tempSensor.getCurrentTemprature() < 40 && !heaters.getHeaterStatus()) {
+			heaters.turnOnHeater();
+			putTimestamp();
+			System.out.println("GardenSection " +this.SectionID +": Heater turned ON" +" Temp-" +tempSensor.getCurrentTemprature());
+		}
+		if(tempSensor.getCurrentTemprature() > 70 && heaters.getHeaterStatus()) {
+			heaters.turnOffHeater();
+			putTimestamp();
+			System.out.println("GardenSection " +this.SectionID +": Heater turned OFF" +" Temp-" +tempSensor.getCurrentTemprature());
+		}
+	}
+	
+	private void putFertilizers() {
+		soilSensor.setFertilizerLevel(150);
+		System.out.println("GardenSection " +this.SectionID +": Fertilizers put");
+	}
 }
